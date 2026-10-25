@@ -20,3 +20,4 @@
 /MUJOCO_LOG.TXT
 *.txt
 *.envsubst.yaml
+__pycache__/

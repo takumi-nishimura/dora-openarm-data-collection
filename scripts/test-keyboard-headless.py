@@ -35,10 +35,11 @@ import time
 import aiohttp
 from aiortc import RTCConfiguration, RTCPeerConnection, RTCSessionDescription
 import numpy as np
-from openarm_control import Kinematics, register_common_args, setup_from_args
-from openarm_mujoco.v2 import openarm_demo_xml
+from openarm_control import Kinematics
 import pyarrow.parquet as pq
 import yaml
+
+from model_config import load_profile
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -155,11 +156,24 @@ def angle_range(poses):
     )
 
 
-def validate(output):
-    parser = argparse.ArgumentParser()
-    register_common_args(parser)
-    kin = Kinematics(setup_from_args(parser.parse_args(["--xml", openarm_demo_xml()])))
+def validate(output, profile):
+    kin = Kinematics(profile.setup())
     home = {side: kin.setup.read_ee_pose(side).copy() for side in ("right", "left")}
+    reports = [
+        json.loads(path.read_text())
+        for path in (output / "model-config").glob("*.json")
+    ]
+    require(
+        {r["entrypoint"] for r in reports}
+        == {"dora-openarm-keyboard", "dora-openarm-ik", "dora-openarm-mujoco"},
+        "Missing node model reports",
+    )
+    for report in reports:
+        require(report["profile"] == profile.name, "Nodes selected different profiles")
+        require(
+            report["xml"] == str(profile.xml), "Nodes selected different model XMLs"
+        )
+        require(report["settings"] == profile.settings, "Node frames/keyframes differ")
     results = {}
     for episode, case in enumerate(CASES):
         results[case] = {}
@@ -185,11 +199,11 @@ def validate(output):
             if case == "home":
                 require(
                     np.linalg.norm(targets[0, :3] - home[side][:3]) < 1e-4,
-                    f"{side}: Keyboard home position differs from demo home",
+                    f"{side}: Keyboard home position differs from model home",
                 )
                 require(
                     angle_range(np.vstack((home[side], targets[0, :7]))) < 1e-3,
-                    f"{side}: Keyboard home orientation differs from demo home",
+                    f"{side}: Keyboard home orientation differs from model home",
                 )
             elif case == "translation":
                 require(
@@ -228,12 +242,22 @@ def validate(output):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--model",
+        choices=("demo", "pedestal"),
+        default=os.environ.get("OPENARM_MODEL", "demo"),
+    )
+    args = parser.parse_args()
+    profile = load_profile(args.model)
     for port in (8000, 8080):
         with socket.socket() as probe:
             probe.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             probe.bind(("127.0.0.1", port))
     (ROOT / "out").mkdir(exist_ok=True)
-    output = Path(tempfile.mkdtemp(prefix="keyboard-smoke-", dir=ROOT / "out"))
+    output = Path(
+        tempfile.mkdtemp(prefix=f"keyboard-smoke-{profile.name}-", dir=ROOT / "out")
+    )
     metadata = yaml.safe_load((ROOT / "metadata_mujoco.yaml").read_text())
     metadata["equipment"]["perceptions"]["cameras"] = {}
     metadata_file = output / "metadata.yaml"
@@ -276,6 +300,8 @@ def main():
         MUJOCO_VIEWER="false",
         MUJOCO_RENDER="false",
         AUTO_OPEN="no",
+        OPENARM_MODEL=profile.name,
+        OPENARM_MODEL_REPORT_DIR=str(output / "model-config"),
     )
     env["PATH"] = str(Path(sys.executable).parent) + os.pathsep + env["PATH"]
     process = None
@@ -301,9 +327,9 @@ def main():
             asyncio.run(exercise(process))
             code = process.wait(timeout=15)
             require(code == 0, f"Dataflow exited with code {code}")
-        validate(output)
+        validate(output, profile)
         print(
-            "PASS: both arms translated, rotated, gripped, held targets after release; UI Quit stopped the dataflow."
+            f"PASS ({profile.name}): both arms translated, rotated, gripped, held targets after release; UI Quit stopped the dataflow."
         )
     except BaseException:
         print((output / "dataflow.log").read_text()[-12000:], file=sys.stderr)

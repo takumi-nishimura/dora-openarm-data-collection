@@ -53,11 +53,16 @@ nodes:
       - vr_receive_times
 
   - id: ik
-    path: ../dora-openarm-ik
+    path: ../scripts/model-node
     args: >-
+      dora-openarm-ik
       --mode bimanual --tick-hz 250
       --max-iters 5 --damping 0.1
       --posture-cost 0 --lm-damping 0.01 --limit-velocity
+    env:
+      OPENARM_MODEL: "${OPENARM_MODEL:-}"
+      ROBOT: "${ROBOT:-dummy}"
+      OPENARM_MODEL_REPORT_DIR: "${OPENARM_MODEL_REPORT_DIR:-}"
     inputs:
       target_right: udp-receiver/pose_right
       target_left: udp-receiver/pose_left

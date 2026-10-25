@@ -1,0 +1,12 @@
+# Standard OpenArm V2 Pedestal with the stock arms and grippers.
+# Hardware correspondence is user-confirmed; physical calibration is checked in #4.
+asset: pedestal/pedestal.xml
+keyframe: home
+origin_frame: arm_origin
+origin_frame_type: site
+frame_right: right_ee_control_point
+frame_left: left_ee_control_point
+frame_type_right: site
+frame_type_left: site
+render: false
+driver_config: openarm_pedestal

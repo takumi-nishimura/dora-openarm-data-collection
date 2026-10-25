@@ -44,7 +44,9 @@ jobs:
           uv sync --locked
       - name: Keyboard to MuJoCo without a display
         run: |
+          uv run --no-sync python scripts/test-model-config.py
           uv run --no-sync python scripts/test-keyboard-headless.py
+          uv run --no-sync python scripts/test-keyboard-headless.py --model pedestal
       - name: Up
         id: up
         run: |
