@@ -55,7 +55,7 @@ are modules under [`modules/`](modules) picked by environment variables:
 
 | Variable | Values | Picks | Default |
 |---|---|---|---|
-| `LEADER` | `ker`, `vr`, `webxr`, `dummy` | `modules/leader-$LEADER.yaml` | `dummy` |
+| `LEADER` | `ker`, `keyboard`, `vr`, `webxr`, `dummy` | `modules/leader-$LEADER.yaml` | `dummy` |
 | `ROBOT` | `cell` (real Cell), `pedestal`, `mujoco`, `dummy` | `modules/robot-$ROBOT.yaml` | `dummy` |
 
 dora doesn't expand environment variables in `module:` paths
@@ -83,6 +83,22 @@ under `data/$LEADER-$ROBOT/`, e.g. `data/webxr-mujoco/`:
 
 `LEADER=ker` uses a [KER](https://github.com/enactic/dora-openarm-ker) leader arm
 connected over USB. Its joint positions are sent to the follower arms directly.
+
+### Keyboard leader
+
+`LEADER=keyboard` uses the official
+[dora-openarm-keyboard](https://github.com/enactic/dora-openarm-keyboard) browser
+input and the existing IK node. With the environment activated, run:
+
+```bash
+LEADER=keyboard ROBOT=mujoco scripts/dora-envsubst run dataflow.yaml --uv
+```
+
+Open http://127.0.0.1:8080/ for key input and http://127.0.0.1:8000/ for the
+collection UI. Use the collection UI's Quit action to stop the whole dataflow;
+Keyboard's Esc currently stops its own node. See
+[the SSH setup and verification guide](docs/keyboard-ssh.md) for headless tests,
+remote browser access, and remaining acceptance checks.
 
 ### VR leader
 
@@ -134,6 +150,15 @@ lifter and no cameras. The followers use the `openarm_pedestal` configuration.
 ([dora-openarm-mujoco](https://github.com/enactic/dora-openarm-mujoco)) instead
 of real OpenArm units and cameras. We can use this for testing teleoperation and
 data collection without real hardware.
+
+For control-only checks over SSH, set `MUJOCO_VIEWER=false MUJOCO_RENDER=false`
+before the launch command. The default values are `true`, preserving the local
+viewer and five camera streams. The automated headless test uses isolated
+arm-only recording metadata:
+
+```bash
+uv run --locked python scripts/test-keyboard-headless.py
+```
 
 ### Dummy robot
 

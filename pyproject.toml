@@ -27,6 +27,7 @@ dependencies = [
     "dora-openarm-dummy-camera",
     "dora-openarm-dummy-ker",
     "dora-openarm-ker",
+    "dora-openarm-keyboard",
     "dora-openarm-kinematics",
     "dora-openarm-mujoco",
     "dora-openarm-quitter",
@@ -53,6 +54,7 @@ dora-openarm-dummy = { path = "nodes/dora-openarm-dummy", editable = true }
 dora-openarm-dummy-camera = { path = "nodes/dora-openarm-dummy-camera", editable = true }
 dora-openarm-dummy-ker = { path = "nodes/dora-openarm-dummy-ker", editable = true }
 dora-openarm-ker = { path = "nodes/dora-openarm-ker", editable = true }
+dora-openarm-keyboard = { path = "nodes/dora-openarm-keyboard", editable = true }
 dora-openarm-kinematics = { path = "nodes/dora-openarm-kinematics", editable = true }
 dora-openarm-mujoco = { path = "nodes/dora-openarm-mujoco", editable = true }
 dora-openarm-quitter = { path = "nodes/dora-openarm-quitter", editable = true }

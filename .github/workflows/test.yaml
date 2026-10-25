@@ -42,6 +42,9 @@ jobs:
       - name: Install
         run: |
           uv sync --locked
+      - name: Keyboard to MuJoCo without a display
+        run: |
+          uv run --no-sync python scripts/test-keyboard-headless.py
       - name: Up
         id: up
         run: |

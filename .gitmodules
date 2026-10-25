@@ -55,3 +55,6 @@
 [submodule "lib/openarm_mujoco"]
 	path = lib/openarm_mujoco
 	url = https://github.com/enactic/openarm_mujoco.git
+[submodule "nodes/dora-openarm-keyboard"]
+	path = nodes/dora-openarm-keyboard
+	url = https://github.com/enactic/dora-openarm-keyboard.git
