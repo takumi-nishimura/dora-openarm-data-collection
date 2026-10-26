@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Added in the takumi-nishimura fork; see docs/provenance.md.
 # Standard OpenArm V2 Pedestal with the stock arms and grippers.
-# Hardware correspondence is user-confirmed; physical calibration is checked in #4.
+# Hardware correspondence is user-confirmed; physical calibration is checked with Keyboard in #13.
 asset: pedestal/pedestal.xml
 keyframe: home
 origin_frame: arm_origin

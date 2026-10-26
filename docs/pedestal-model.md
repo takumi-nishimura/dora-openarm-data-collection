@@ -7,7 +7,9 @@ This records the SSH-verifiable part of [issue #3](https://github.com/takumi-nis
 The operator confirmed a standard OpenArm Pedestal with no changes to the arm
 mounts or grippers. This selects the existing `openarm-mujoco` Pedestal model;
 physical dimensions, zero offsets and motor directions still need measurement
-during [issue #4](https://github.com/takumi-nishimura/dora-openarm-data-collection/issues/4).
+during the Keyboard hardware check in
+[issue #13](https://github.com/takumi-nishimura/dora-openarm-data-collection/issues/13),
+before WebXR.
 
 ## One model for input, IK and simulation
 
@@ -122,7 +124,7 @@ The gripper uses a different startup convention and is recorded separately:
 
 The arm home matches the driver start; the gripper state changes when targets
 begin arriving. Gripper startup, alignment triggering and physical endpoint
-verification are handed to issues #4 and #6. No driver limits or calibration
+verification are handed to issues #13 and #6. No driver limits or calibration
 offsets were changed to hide these differences.
 
 ## Verification and remaining checks
@@ -134,7 +136,7 @@ offscreen preview. The demo regression passed using the same suite.
 
 Physical correspondence currently rests on the user-confirmed standard
 configuration and the published stock model. The following remain for the
-first hardware check in issue #4:
+first Keyboard hardware check in issue #13:
 
 - Confirm floor/base reference, mounting position and orientation against the
   physical device, and inspect any calibration offsets.
@@ -148,5 +150,6 @@ On 2026-10-26, the operator also confirmed the local Pedestal viewer and manual
 browser key input on commit `fc24f13ea492d36552a6c900e520d077a12fd68e`, with
 `OPENARM_MODEL=pedestal LEADER=keyboard ROBOT=mujoco MUJOCO_VIEWER=true
 MUJOCO_RENDER=false`. This completes the graphical acceptance condition for
-issue #3. HOME/focus-loss/Esc behavior remains issue #6. Quest input is verified
-in issue #4; no headset or real-arm session was run here.
+issue #3. The next step is Keyboard hardware verification in issue #13, followed
+by WebXR in issue #4. HOME/focus-loss/Esc behavior remains issue #6. No headset
+or real-arm session was run here.

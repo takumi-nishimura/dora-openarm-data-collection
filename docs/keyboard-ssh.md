@@ -133,3 +133,9 @@ remain to be checked. Esc is not routed to UI Quit;
 whole-dataflow shutdown and HOME interruption are tracked by
 [issue #6](https://github.com/takumi-nishimura/dora-openarm-data-collection/issues/6).
 No real-arm command or Quest session is part of this verification.
+
+After the Pedestal model and GUI check, continue with
+[Keyboard on the real Pedestal](https://github.com/takumi-nishimura/dora-openarm-data-collection/issues/13)
+before WebXR. That step verifies CAN configuration, startup/alignment/stop
+behavior and model-to-hardware correspondence. This simulation guide does not
+establish that the hardware has been tested.
