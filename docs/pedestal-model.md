@@ -64,7 +64,8 @@ The headless test records the resolved configuration from Keyboard, IK and
 MuJoCo under `out/keyboard-smoke-<profile>-*/model-config/`. It verifies that
 all three use the same profile, XML, frames and home before checking motion.
 Joint actions, observations, input poses, metrics and logs are retained
-alongside those reports. The suite is run in CI for both models.
+alongside those reports. Run these tests locally for both models. The added
+CI test step was removed on 2026-10-26 at the operator's request.
 
 Inspect the model and driver without opening CAN devices:
 
@@ -140,6 +141,9 @@ first hardware check in issue #4:
   The current scene includes the stock floor and pedestal; no workspace
   dimensions were guessed.
 
-Issue #3 still requires the graphical viewer and browser's manual key input to
-be checked on this profile. HOME/focus-loss/Esc behavior remains issue #6.
-Quest input is verified in issue #4; no headset or real-arm session was run here.
+On 2026-10-26, the operator also confirmed the local Pedestal viewer and manual
+browser key input on commit `fc24f13ea492d36552a6c900e520d077a12fd68e`, with
+`OPENARM_MODEL=pedestal LEADER=keyboard ROBOT=mujoco MUJOCO_VIEWER=true
+MUJOCO_RENDER=false`. This completes the graphical acceptance condition for
+issue #3. HOME/focus-loss/Esc behavior remains issue #6. Quest input is verified
+in issue #4; no headset or real-arm session was run here.
