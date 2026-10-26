@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Copyright 2026 Enactic, Inc.
+# SPDX-License-Identifier: Apache-2.0
+# Added in the takumi-nishimura fork; see docs/provenance.md.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

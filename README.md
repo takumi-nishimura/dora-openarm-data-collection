@@ -1,5 +1,8 @@
 # Data collection configurations for OpenArm with dora-rs
 
+> Modified in the takumi-nishimura fork: Keyboard integration, shared model
+> profiles, and local verification instructions. See [source provenance](docs/provenance.md).
+
 This repository provides data collection configurations for [OpenArm](https://openarm.dev/) with [dora-rs](https://dora-rs.ai/).
 
 ## Setup

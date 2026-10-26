@@ -1,4 +1,7 @@
 # Copyright 2026 Enactic, Inc.
+# Adapted in the takumi-nishimura fork from the upstream leader modules:
+# connect the official Keyboard node to IK using the shared model profile.
+# See docs/provenance.md for the source and retained attribution.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

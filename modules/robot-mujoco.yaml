@@ -1,4 +1,5 @@
 # Copyright 2026 Enactic, Inc.
+# Modified in the takumi-nishimura fork: use the shared model profile and viewer/render settings.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

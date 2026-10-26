@@ -1,3 +1,6 @@
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Added in the takumi-nishimura fork; see provenance.md. -->
+
 # Standard Pedestal model alignment
 
 This records the SSH-verifiable part of [issue #3](https://github.com/takumi-nishimura/dora-openarm-data-collection/issues/3).

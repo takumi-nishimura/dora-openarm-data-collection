@@ -1,3 +1,6 @@
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Added in the takumi-nishimura fork; see provenance.md. -->
+
 # Keyboard integration over SSH
 
 This implements the SSH-verifiable part of [issue #2](https://github.com/takumi-nishimura/dora-openarm-data-collection/issues/2).

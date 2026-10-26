@@ -1,3 +1,5 @@
+# Modified in the takumi-nishimura fork: resolve the added Keyboard dependency.
+# Regenerated lockfile; restore this notice after regeneration (docs/provenance.md).
 version = 1
 revision = 3
 requires-python = "==3.12.*"
