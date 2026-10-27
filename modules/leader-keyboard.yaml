@@ -1,4 +1,7 @@
 # Copyright 2026 Enactic, Inc.
+# Adapted in the takumi-nishimura fork from the upstream leader modules:
+# connect the official Keyboard node to IK using the shared model profile.
+# See docs/provenance.md for the source and retained attribution.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -36,7 +39,12 @@ module:
 
 nodes:
   - id: keyboard
-    path: ../dora-openarm-keyboard
+    path: ../scripts/model-node
+    args: "dora-openarm-keyboard"
+    env:
+      OPENARM_MODEL: "${OPENARM_MODEL:-}"
+      ROBOT: "${ROBOT:-dummy}"
+      OPENARM_MODEL_REPORT_DIR: "${OPENARM_MODEL_REPORT_DIR:-}"
     inputs:
       # Keep-alive only: Keyboard publishes at its own pace, not this tick rate.
       # No camera input is needed for keyboard control over an SSH tunnel.
@@ -48,11 +56,16 @@ nodes:
       - status
 
   - id: ik
-    path: ../dora-openarm-ik
+    path: ../scripts/model-node
     args: >-
+      dora-openarm-ik
       --mode bimanual --tick-hz 500
       --max-iters 5 --damping 0.1
       --posture-cost 0 --lm-damping 0.01 --limit-velocity
+    env:
+      OPENARM_MODEL: "${OPENARM_MODEL:-}"
+      ROBOT: "${ROBOT:-dummy}"
+      OPENARM_MODEL_REPORT_DIR: "${OPENARM_MODEL_REPORT_DIR:-}"
     inputs:
       target_right: keyboard/pose_right
       target_left: keyboard/pose_left

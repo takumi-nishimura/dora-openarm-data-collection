@@ -1,3 +1,6 @@
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!-- Added in the takumi-nishimura fork; see provenance.md. -->
+
 # Keyboard integration over SSH
 
 This implements the SSH-verifiable part of [issue #2](https://github.com/takumi-nishimura/dora-openarm-data-collection/issues/2).
@@ -50,7 +53,8 @@ Artifacts are retained in a unique `out/keyboard-smoke-*/` directory:
 The test descriptor is derived from `dataflow.yaml`. Only recording locations,
 arm-only metadata, and the additional pose recorder are changed. Existing
 datasets are not used. Temporary descriptors are removed on exit. Failed runs
-retain their logs and stop their own process group. The test is also run by CI.
+retain their logs and stop their own process group. Run this test locally; the
+added CI test step was removed on 2026-10-26 at the operator's request.
 
 ## Manual control
 
@@ -122,8 +126,16 @@ that source, without adding rate conversion or changing the producer. Actual
 rate and velocity tuning remains
 [issue #7](https://github.com/takumi-nishimura/dora-openarm-data-collection/issues/7).
 
-Manual browser focus loss, HOME return, remote-network WebRTC connectivity, and
-local graphical viewing remain to be checked. Esc is not routed to UI Quit;
+The operator confirmed local graphical viewing and browser key input with the
+Pedestal profile on 2026-10-26; see [the model verification record](pedestal-model.md).
+Manual browser focus loss, HOME return, and remote-network WebRTC connectivity
+remain to be checked. Esc is not routed to UI Quit;
 whole-dataflow shutdown and HOME interruption are tracked by
 [issue #6](https://github.com/takumi-nishimura/dora-openarm-data-collection/issues/6).
 No real-arm command or Quest session is part of this verification.
+
+After the Pedestal model and GUI check, continue with
+[Keyboard on the real Pedestal](https://github.com/takumi-nishimura/dora-openarm-data-collection/issues/13)
+before WebXR. That step verifies CAN configuration, startup/alignment/stop
+behavior and model-to-hardware correspondence. This simulation guide does not
+establish that the hardware has been tested.

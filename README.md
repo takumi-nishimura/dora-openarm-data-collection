@@ -1,5 +1,8 @@
 # Data collection configurations for OpenArm with dora-rs
 
+> Modified in the takumi-nishimura fork: Keyboard integration, shared model
+> profiles, and local verification instructions. See [source provenance](docs/provenance.md).
+
 This repository provides data collection configurations for [OpenArm](https://openarm.dev/) with [dora-rs](https://dora-rs.ai/).
 
 ## Setup
@@ -152,13 +155,19 @@ of real OpenArm units and cameras. We can use this for testing teleoperation and
 data collection without real hardware.
 
 For control-only checks over SSH, set `MUJOCO_VIEWER=false MUJOCO_RENDER=false`
-before the launch command. The default values are `true`, preserving the local
+before the launch command. The demo profile defaults to `true`, preserving the local
 viewer and five camera streams. The automated headless test uses isolated
 arm-only recording metadata:
 
 ```bash
 uv run --locked python scripts/test-keyboard-headless.py
 ```
+
+For the standard Pedestal model, set `OPENARM_MODEL=pedestal` with
+`ROBOT=mujoco`. The shared profile selects the same XML, frames and keyframe for
+IK and simulation, and derives Keyboard's home from FK. `ROBOT=pedestal` selects
+that model automatically. See [model alignment and verification](docs/pedestal-model.md)
+for the geometry comparison, headless test, preview, and hardware handoff.
 
 ### Dummy robot
 

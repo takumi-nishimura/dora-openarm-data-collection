@@ -1,4 +1,5 @@
 # Copyright 2026 Enactic, Inc.
+# Modified in the takumi-nishimura fork: use the shared model profile for IK.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -72,11 +73,16 @@ nodes:
       - pose_reference
 
   - id: ik
-    path: ../dora-openarm-ik
+    path: ../scripts/model-node
     args: >-
+      dora-openarm-ik
       --mode bimanual --tick-hz 250
       --max-iters 5 --damping 0.1
       --posture-cost 0 --lm-damping 0.01 --limit-velocity
+    env:
+      OPENARM_MODEL: "${OPENARM_MODEL:-}"
+      ROBOT: "${ROBOT:-dummy}"
+      OPENARM_MODEL_REPORT_DIR: "${OPENARM_MODEL_REPORT_DIR:-}"
     inputs:
       target_right: webxr/pose_right
       target_left: webxr/pose_left

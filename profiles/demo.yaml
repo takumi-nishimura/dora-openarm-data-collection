@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: Apache-2.0
+# Added in the takumi-nishimura fork; see docs/provenance.md.
+# Official Cell demo, retained for the original simulation smoke test.
+asset: cell/demo.xml
+keyframe: home
+origin_frame: arm_origin
+origin_frame_type: site
+frame_right: right_ee_control_point
+frame_left: left_ee_control_point
+frame_type_right: site
+frame_type_left: site
+render: true

@@ -1,3 +1,4 @@
+# Modified in the takumi-nishimura fork: add the official Keyboard node as a pinned submodule.
 [submodule "nodes/dora-openarm-data-collection-ui"]
 	path = nodes/dora-openarm-data-collection-ui
 	url = https://github.com/enactic/dora-openarm-data-collection-ui.git
