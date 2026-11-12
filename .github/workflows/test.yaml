@@ -15,10 +15,13 @@
 name: Test
 on:
   push:
+    branches: [main]
   pull_request:
+  workflow_dispatch:
 concurrency:
-  group: ${{ github.head_ref || github.sha }}-${{ github.workflow }}
-  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'workflow_dispatch' }}
+
 jobs:
   run:
     name: Run
